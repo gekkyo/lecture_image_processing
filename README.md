@@ -1,16 +1,39 @@
-(参考)Matlab入門  
-http://www.ns.kogakuin.ac.jp/~ct13050/johogaku/2-2.matlab_getstart.pdf
+# 画像処理工学 レポート
 
-例えば，このようにしてレポートを作成することが可能です．  
-https://github.com/mackhasegawa/lecture_image_processing/blob/master/kadai1.md
+画像処理工学のレポートです。<br>
+17NC011 海辺 康志
 
+## ディレクトリ構成
 
-フリー素材
-- https://www.pakutaso.com/ 
-- フリー素材アイドル「MIKA☆RIKA」 http://mika-rika-free.jp/
+ディレクトリ構成は以下のようになっています。<br>
+課題毎にディレクトリを分割しています。
 
+```
+.
+│
+├ README.md ............................. 目次
+│
+├ .gitignore
+├ .gitattributes
+│
+├ kadai_01 ................................... 課題01 格納ディレクトリ
+│　│
+│　├ kadai_01.py ............................. プログラムファイル
+│　│
+│　├ kadai_01.md ............................. レポート
+│　│
+│　└ resource ................................ 画像類格納ディレクトリ
+│
+│  〜
+└
 
+```
 
+## 制作環境
 
+* [Python](https://www.python.org/) 3.7.4 - Python programming language
 
+###### ライブラリ
+
+* [opencv-contrib-python](https://pypi.org/project/opencv-contrib-python/) 4.1.0 - OpenCV packages for Python
 

@@ -10,6 +10,9 @@ pause;
 
 H = imhist(ORG); %ヒストグラムのデータを列ベクトルEに格納
 myu_T = mean(H);
+
+disp(myu_T);
+
 max_val = 0;
 max_thres = 1;
 for i=1:255
