@@ -32,6 +32,9 @@ def image_show(orig_img):
 
 # ファイルから画像を読み込み
 img = cv2.imread('resource/original.png')
+# 画像を表示して待機
+image_show(img)
+input("Displaying original image. Hit Enter.\n")
 
 # 1/2 倍に縮小し元の大きさに戻す
 img = cv2.resize(img, (0,0), fx=0.5, fy=0.5, interpolation=cv2.INTER_NEAREST)
