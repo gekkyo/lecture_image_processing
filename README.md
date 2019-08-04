@@ -33,15 +33,15 @@
 
 ## 制作環境
 
-###### OS
+##### OS
 
 * MacOS 10.13.6
 
-###### 使用言語
+##### 使用言語
 
 * [Python](https://www.python.org/) 3.7.4 - Python programming language
 
-###### 使用ライブラリ
+##### 使用ライブラリ
 
 * [opencv-contrib-python](https://pypi.org/project/opencv-contrib-python/) 4.1.0 - OpenCV packages for Python
 * [numpy](https://numpy.org/) 1.17.0 - Fundamental package for scientific computing with Python
