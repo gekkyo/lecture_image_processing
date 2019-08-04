@@ -39,13 +39,13 @@
 
 ##### 使用言語
 
-* [Python](https://www.python.org/) 3.7.4 - Python programming language
+* [Python](https://www.python.org/){:target="_blank"} 3.7.4 - Python programming language
 
 ##### 使用ライブラリ
 
-* [opencv-contrib-python](https://pypi.org/project/opencv-contrib-python/) 4.1.0 - OpenCV packages for Python
-* [numpy](https://numpy.org/) 1.17.0 - Fundamental package for scientific computing with Python
-* [matplotlib](https://matplotlib.org/) 3.1.1 - Python 2D plotting library
+* [opencv-contrib-python](https://pypi.org/project/opencv-contrib-python/){:target="_blank"} 4.1.0 - OpenCV packages for Python
+* [numpy](https://numpy.org/){:target="_blank"} 1.17.0 - Fundamental package for scientific computing with Python
+* [matplotlib](https://matplotlib.org/){:target="_blank"} 3.1.1 - Python 2D plotting library
 
 ## 各課題レポート
 
