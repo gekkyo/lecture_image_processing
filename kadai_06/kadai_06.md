@@ -157,7 +157,7 @@ quant_error_p = old_p - new_p
 
 求めた量子化誤差を, 着目ピクセルより後ろに位置する近傍のピクセルに配分してゆく. この方法は, ディザ法の中でも「フロイド-スタインバーグ」のアルゴリズムと呼ばれ, 以下のルールを用いて量子化誤差を分配する.
 
-![img](https://latex.codecogs.com/gif.download?%5Cdpi%7B120%7D%20%5Clarge%20%5Cfrac%7B1%7D%7B16%7D%5Cbegin%7Bbmatrix%7D%20%26%20*%20%26%207%20%5C%5C%203%20%26%205%20%26%201%20%5Cend%7Bbmatrix%7D)
+![img](https://raw.githubusercontent.com/gekkyo/lecture_image_processing/master/kadai_06/resource/equation.gif)
 
 ここで「\*」は現在注目している画素を指す.
 
