@@ -88,7 +88,7 @@ input("Displaying histogram. Hit Enter.\n")
 # ダイナミックレンジ拡大
 # 画像をコピー
 post_img = gray_img.copy()
-# ヒスとブラムのダイナミックレンジ拡大
+# ヒストグラムのダイナミックレンジ拡大
 post_img = cv2.equalizeHist(post_img)
 # 画像を表示して待機
 image_show(post_img)

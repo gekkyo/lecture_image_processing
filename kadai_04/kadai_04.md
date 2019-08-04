@@ -1,49 +1,187 @@
-# 課題１レポート（サンプル）
+# 課題4 画像のヒストグラム
 
-標準画像「Lenna」を原画像とする．この画像は縦512画像，横512画素による正方形のディジタルカラー画像である．
+画素の濃度ヒストグラムを生成せよ.
 
-ORG=imread('Lenna.png'); % 原画像の入力  
-imagesc(ORG); axis image; % 画像の表示
+## 使用画像
 
-によって，原画像を読み込み，表示した結果を図１に示す．
+標準画像「original.png」を原画像とする.
 
-![原画像](https://github.com/mackhasegawa/lecture_image_processing/blob/master/image/org_img.png?raw=true)  
+この画像は縦600px, 横800pxのディジタルカラー画像である.
+
+以下図1に原画像を示す.
+
+![原画像](https://raw.githubusercontent.com/gekkyo/lecture_image_processing/master/kadai_04/resource/original.png)
+
 図1 原画像
 
-原画像を1/2サンプリングするには，画像を1/2倍に縮小した後，2倍に拡大すればよい．なお，拡大する際には，単純補間するために「box」オプションを設定する．
+## プログラム説明
 
-IMG = imresize(ORG,0.5); % 画像の縮小  
-IMG2 = imresize(IMG,2,'box'); % 画像の拡大
+### インポート
 
-1/2サンプリングの結果を図２に示す．
+以下の部分にて, 画像処理に必要な「openCV」のライブラリを読み込んでいる.
 
-![原画像](https://github.com/mackhasegawa/lecture_image_processing/blob/master/image/kadai1_1.png?raw=true)  
-図2 1/2サンプリング
+```python
+import cv2
+```
 
-同様に原画像を1/4サンプリングするには，画像を1/2倍に縮小した後，2倍に拡大すればよい．すなわち，
+また, 以下の部分にて「matplotlib」を読み込んでいる.
 
-IMG = imresize(ORG,0.5); % 画像の縮小  
-IMG2 = imresize(IMG,2,'box'); % 画像の拡大
+このライブラリは, 処理した画像を画面にプロットするために使用している.
 
-とする．1/4サンプリングの結果を図３に示す．
+```python
+from matplotlib import pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+from matplotlib.colors import Normalize
+from matplotlib.cm import ScalarMappable, get_cmap
+```
 
-![原画像](https://github.com/mackhasegawa/lecture_image_processing/blob/master/image/kadai1_2.png?raw=true)  
-図3 1/4サンプリング
+### 画像の読み込み・グレースケール変換
 
-1/8から1/32サンプリングは，
+まず, 以下の部分で原画像を読み込んでいる.
 
-IMG = imresize(ORG,0.5); % 画像の縮小  
-IMG2 = imresize(IMG,2,'box'); % 画像の拡大
+```python
+src_img = cv2.imread('resource/original.png')
+```
 
-を繰り返す．サンプリングの結果を図４～６に示す．
+読み込んだ画像は, 以下の部分でグレースケールに変換した.
 
-![原画像](https://github.com/mackhasegawa/lecture_image_processing/blob/master/image/kadai1_3.png?raw=true)  
-図4 1/8サンプリング
+```python
+gray_img = cv2.cvtColor(src_img, cv2.COLOR_BGR2GRAY)
+```
 
-![原画像](https://github.com/mackhasegawa/lecture_image_processing/blob/master/image/kadai1_4.png?raw=true)  
-図5 1/16サンプリング
+きちんと変換できたかどうか確認するため, 以下の部分でグレースケールに変換した原画像を画面にプロットした. プロットの処理に関しては, 関数「image_show()」に処理をまとめている. 詳しくは「画面表示処理」の部分を参照のこと.
 
-![原画像](https://github.com/mackhasegawa/lecture_image_processing/blob/master/image/kadai1_5.png?raw=true)  
-図6 1/32サンプリング
+```python
+image_show(gray_img)
+input("Displaying gray image. Hit Enter.\n")
+```
 
-このようにサンプリング幅が大きくなると，モザイク状のサンプリング歪みが発生する．
+表示した結果を図2に示す.
+
+![原画像](https://raw.githubusercontent.com/gekkyo/lecture_image_processing/master/kadai_04/resource/gray.jpg)
+
+図2 グレースケール画像
+
+### ヒストグラム
+
+ヒストグラムの作成と表示は以下の部分で処理をしている.
+
+処理が複雑になったため, 関数を作成し呼び出す形とした.
+
+```python
+hist_show(post_img)
+```
+
+実際の関数は以下となる. 引数としてグレースケールのopenCV画像を取り, ヒストグラムを表示する処理となる.
+
+```python
+def hist_show(img):
+
+    # ヒストグラム計算
+    hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+
+    # MatPlotLibで表示
+    # figureとaxisを作成
+    fig, ax = plt.subplots()
+    # axisにプロット
+    ax.plot(hist)
+    # x軸の最小最大を指定
+    ax.set_xlim(0, 255)
+    # グリッド表示
+    ax.grid()
+    # グレーバーをつけるため、x軸のラベルとメモリを消す
+    ax.tick_params(axis='x', labelbottom=False, bottom=False)
+    # グレーバー作成のための用意
+    norm = Normalize(vmin=0, vmax=255)
+    cmap = get_cmap('gray')
+    mappable = ScalarMappable(cmap=cmap, norm=norm)
+    # axisに図を追加できるように
+    divider = make_axes_locatable(ax)
+    # axisの下に、5％の大きさの図を隙間を空けずに生成
+    cax = divider.append_axes("bottom", size="5%", pad=0)
+    # グレーバーを生成
+    fig.colorbar( mappable, cax=cax, orientation='horizontal')
+    plt.show()
+```
+
+ヒストグラムの計算をしている部分は以下になる.
+
+```python
+hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+```
+
+ここでは, openCVに用意されている「calcHist()」関数を使用し, ヒストグラムの計算をした.
+
+以降の部分は, matplotlibを使用したグレーバーの追加や, 画面表示の際の調整である.
+
+ヒストグラムを表示した結果を図3に示す.
+
+![原画像](https://raw.githubusercontent.com/gekkyo/lecture_image_processing/master/kadai_04/resource/histogram.jpg)
+
+図3 ヒストグラム
+
+### 画面表示処理
+
+画像を画面にプロットするために, 以下の関数を作成した.
+
+```python
+def image_show(orig_img):
+    # 解像度
+    resolution = 72
+    # figure作成
+    fig = plt.figure(figsize=(orig_img.shape[1] / resolution, orig_img.shape[0] / resolution), dpi=resolution)
+    # figure内にaxis追加
+    ax = plt.subplot(111)
+    # axisに画像を表示する
+    im = ax.imshow(orig_img, cmap="gray")
+    # axisに図を追加できるように
+    divider = make_axes_locatable(ax)
+    # axisの右に、2％の大きさの図を0.1インチの隙間を空けて生成
+    cax = divider.append_axes("right", size="2%", pad=0.1)
+    # 作成した部分にカラーバーを生成
+    fig.colorbar(im, cax=cax, orientation='vertical')
+    plt.show()
+```
+
+この関数では, openCVのグレースケール画像を引数として渡すことにより, その画像をmatplotlibを使用して表示する処理をしている.
+
+表示サイズをピクセル等倍にするため, まず以下の部分でfigureの設定をする.
+
+```python
+fig = plt.figure(figsize=(orig_img.shape[1] / resolution, orig_img.shape[0] / resolution), dpi=resolution)
+```
+
+matplotlibでは, 表示サイズはインチで指定する必要があるため, 取得した原画像のピクセルサイズを解像度で割ることで表示サイズをピクセル等倍とした.
+
+また, 画像右にグレースケールのカラーバーを表示させるため, 以下の処理をしている.
+
+```python
+# figure内にaxis追加
+ax = plt.subplot(111)
+# axisに画像を表示する
+im = ax.imshow(orig_img, cmap="gray")
+# axisに図を追加できるように
+divider = make_axes_locatable(ax)
+# axisの右に、2％の大きさの図を0.1インチの隙間を空けて生成
+cax = divider.append_axes("right", size="2%", pad=0.1)
+# 作成した部分にカラーバーを生成
+fig.colorbar(im, cax=cax, orientation='vertical')
+```
+
+ここではまず先ほど作成したfigure内にプロットを追加し, 画像を配置した.
+
+また, カラーバーを追加できるようにするための処理をし, 「colorbar()」関数にてカラーバーを生成している.
+
+そして以下の部分で, 最終的に生成した画像を表示させている.
+
+```python
+plt.show()
+```
+
+## 考察
+
+ヒストグラム画像では, 輝度値が50〜80付近と170付近に大きく分かれることが確認できる.
+
+これはグレースケールの画像にて, 景色部分に50〜80付近の値が多く存在し, 前景の狐の体毛部分に170付近の値が多く存在するためである.
+
+40以下の値と210以降の値の画素がほとんど存在していないため, その部分の範囲をカットしてダイナミックレンジを広げることにより, よりコントラストがはっきりした画像を得ることができると考えられる.

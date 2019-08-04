@@ -49,7 +49,7 @@ def get_otsu_threshold(img):
     for i in range(0, len(hist)):
         n_all += hist[i]
         sum_all += i * hist[i]
-    # 全画素の濃度の合計
+    # 全画素の濃度の平均
     myu_t = sum_all / n_all
 
     # 判別比
@@ -123,9 +123,10 @@ input("Displaying gray image. Hit Enter.\n")
 # 画像をコピー
 post_img = gray_img.copy()
 # しきい値を計算
-thresh = get_otsu_threshold(post_img)
+#thresh = get_otsu_threshold(post_img)
+th, post_img = cv2.threshold(post_img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 # 2階調化
-post_img = (post_img > thresh) * 255
+# post_img = (post_img > thresh) * 255
 # 画像を表示して待機
 image_show(post_img)
 input("Displaying 2 color image. Hit Enter.\n")

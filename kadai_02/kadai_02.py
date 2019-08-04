@@ -71,7 +71,7 @@ for i in range(256):
         look_up_table[i][0] = 170
     else:
         look_up_table[i][0] = 255
-# 2階調化
+# 4階調化
 post_img = cv2.LUT(post_img, look_up_table)
 # 画像を表示して待機
 image_show(post_img)
@@ -99,7 +99,7 @@ for i in range(256):
         look_up_table[i][0] = 218
     else:
         look_up_table[i][0] = 255
-# 2階調化
+# 8階調化
 post_img = cv2.LUT(post_img, look_up_table)
 # 画像を表示して待機
 image_show(post_img)
